@@ -5,10 +5,11 @@ package main
 // #include <stdio.h>
 // #include <errno.h>
 // #include <string.h>
-// #include <krb5.h>
+
 /*
 
 #include "./data.h"
+#include "./krb5.h"
 
 static inline krb5_data* data_pointer_at_index(krb5_data *array, int index)
 {
