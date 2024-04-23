@@ -1,4 +1,4 @@
-package main
+package interop
 
 // #include <stdlib.h>
 // #include <stdio.h>
