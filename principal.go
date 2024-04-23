@@ -1,5 +1,6 @@
-package interop
+package main
 
+// #cgo LDFLAGS: -lkrb5
 // #include <stdlib.h>
 // #include <stdio.h>
 // #include <errno.h>
@@ -54,10 +55,12 @@ krb5_build_principal_allocated_data(krb5_context context,
 import "C"
 
 import (
+	"fmt"
 	"runtime"
 	"unsafe"
 )
 
+// principal.go begins here ...
 type Principal struct {
 	c *Context
 	p C.krb5_principal // pointer type
@@ -175,4 +178,143 @@ func (p *Principal) String() string {
 		return str
 	}
 	return err.Error()
+}
+
+// context.go begins here ...
+// MIT libkrb5 krb5_error_code.
+type ErrorCode C.krb5_error_code
+
+func (e ErrorCode) Code() int32 {
+	return int32(e)
+}
+
+func (e ErrorCode) Error() string {
+ 	var cmsg *C.char
+	cmsg = C.krb5_get_error_message(nil, C.krb5_error_code(e))
+	gostr := C.GoString(cmsg)
+	C.krb5_free_error_message(nil, cmsg) // seems like a NOOP
+	return gostr
+}
+
+// Context is libkrb5 krb5_context and has all global operations a methods
+// No method on Context or any returned objects are go-routine safe.
+
+type Context struct {
+	kctx unsafe.Pointer // a krb5_context
+}
+
+func (kc *Context) ErrorMessage(e ErrorCode) string {
+	var cmsg *C.char
+	cmsg = C.krb5_get_error_message(kc.toC(), C.krb5_error_code(e))
+	gostr := C.GoString(cmsg)
+	C.krb5_free_error_message(kc.toC(), cmsg)
+	return gostr
+}
+
+func (kc *Context) toC() C.krb5_context {
+	return C.krb5_context(kc.kctx)
+}
+
+// InitContext must be called to use Kerberos. It provides access to all global methods.
+func InitContext() (ctx *Context, err error) {
+	var kc C.krb5_context
+	code := C.krb5_init_secure_context(&kc)
+ 	if code != 0 {
+		err = ErrorCode(code)
+		return
+	}
+	ctx = &Context{kctx: unsafe.Pointer(kc)}
+	runtime.SetFinalizer(ctx, freeContext)
+	return
+}
+
+// libkrb5 seems to make all free operations safe to call twice by
+// making them a NOP if the pointer is nil.
+func freeContext(kc *Context) {
+	if kc.kctx != nil {
+		C.krb5_free_context(C.krb5_context(kc.kctx))
+	}
+	kc.kctx = nil
+}
+
+func (kc *Context) Timeofday() (seconds, microseconds int32, err error) {
+	var cs  C.krb5_timestamp
+	var cms C.krb5_int32
+
+	code := C.krb5_us_timeofday(kc.toC(), &cs, &cms)
+	if code != 0 {
+		err = ErrorCode(code)
+		return
+	}
+	return int32(cs), int32(cms), nil
+}
+
+func (kc *Context) GetDefaultRealm() (realm string, err error) {
+	var cstring *C.char
+	code := C.krb5_get_default_realm(kc.toC(), &cstring)
+	if code != 0 {
+		err = ErrorCode(code)
+		return
+	}
+	realm = C.GoString(cstring)
+	C.krb5_free_default_realm(kc.toC(), cstring)
+	return
+}
+
+func (kc *Context) SetDefaultRealm(realm string) (err error) {
+	var cstring *C.char
+
+	cstring = C.CString(realm)
+
+	code := C.krb5_set_default_realm(kc.toC(), cstring)
+	if code != 0 {
+		err = ErrorCode(code)
+		return
+	}
+	C.free(unsafe.Pointer(cstring))
+	return
+}
+
+// main.go begins here ...
+func main() {
+	kctx, e := InitContext()
+	if e != nil {
+		fmt.Println(e)
+	}
+
+	var realm = "REALM"
+	var components = []string{"some", "random", "principal"}
+	var pnamestr = "some/random/principal@REALM"
+
+	p1, err := kctx.BuildPrincipal(NT_PRINCIPAL, realm, components...)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	if p1.String() != pnamestr {
+		fmt.Printf("Principal build failed, %s != %s\n", p1, pnamestr)
+	}
+
+	str, err := p1.UnparseName()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	p2, err := kctx.ParseName(str)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	nt, comp, r := p2.NameType(), p2.Name(), p2.Realm()
+
+	var fail bool
+	for i, c := range comp {
+		if c != components[i] {
+			fail = true
+		}
+	}
+
+	if nt != NT_PRINCIPAL || r != realm || fail {
+		t.Error("Principal ParseName failed\n")
+	}
 }
