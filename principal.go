@@ -316,6 +316,6 @@ func main() {
 	}
 
 	if nt != NT_PRINCIPAL || r != realm || fail {
-		t.Error("Principal ParseName failed\n")
+		fmt.Println("Principal ParseName Failed\n")
 	}
 }
