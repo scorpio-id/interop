@@ -1,6 +1,6 @@
 package main
 
-// #cgo LDFLAGS: -lkrb5
+// #cgo LDFLAGS: -L ./interop -lusr
 // #include <stdlib.h>
 // #include <stdio.h>
 // #include <errno.h>
