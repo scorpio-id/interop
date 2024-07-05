@@ -1,5 +1,6 @@
 package main
 
+// #cgo CFLAGS: -I ./krb5/src
 // #include <krb5.h>
 import "C"
 
