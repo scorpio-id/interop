@@ -1,7 +1,7 @@
 package main
 
-// #cgo CFLAGS: -I /interop/krb5/src/include
-// #cgo LDFLAGS: -L /interop/krb5/src/lib
+// #cgo CFLAGS: -I /interop/mit/src/include
+// #cgo LDFLAGS: -L /interop/mit/src/lib
 // #include <krb5.h>
 /*
 

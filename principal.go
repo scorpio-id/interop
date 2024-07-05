@@ -1,8 +1,7 @@
 package main
 
-// #cgo CFLAGS: -I /interop/krb5/src/include
-// #cgo LDFLAGS: -L /interop/krb5/src/lib
-// #include "krb5/src/lib/krb5/os/hostrealm.c"
+// #cgo CFLAGS: -I /interop/mit/src/include
+// #cgo LDFLAGS: -L /interop/mit/src/lib
 // #include <stdlib.h>
 // #include <stdio.h>
 // #include <errno.h>
