@@ -1,6 +1,6 @@
 package main
 
-// #cgo CFLAGS: -I /interop/mit/src/include -ikrb5
+// #cgo CFLAGS: -I /interop/mit/src/include -Wl,-rpath,/interop/mit/src/lib
 // #cgo LDFLAGS: -L /interop/mit/src/lib -lkrb5
 // #include <stdlib.h>
 // #include <stdio.h>
