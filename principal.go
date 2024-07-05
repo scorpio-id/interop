@@ -1,6 +1,6 @@
 package main
 
-// #cgo LDFLAGS: -L . -lkrb5 -Wl,-rpath,.
+// #cgo LDFLAGS: -L . -lkrb5
 // #include <stdlib.h>
 // #include <stdio.h>
 // #include <errno.h>
