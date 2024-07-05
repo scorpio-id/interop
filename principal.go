@@ -1,6 +1,6 @@
 package main
 
-// #cgo LDFLAGS: -L . -lkrb5
+// #cgo CFLAGS: -I ./krb5/src
 // #include <stdlib.h>
 // #include <stdio.h>
 // #include <errno.h>
