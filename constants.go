@@ -1,5 +1,6 @@
 package main
 
+// #cgo LDFLAGS: -L . -lkrb5
 // #include <krb5.h>
 import "C"
 
