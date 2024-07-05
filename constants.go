@@ -1,7 +1,7 @@
 package main
 
 // #cgo CFLAGS: -I /interop/mit/src/include
-// #cgo LDFLAGS: -L /interop/mit/src/lib -Wl,-rpath=krb5/
+// #cgo LDFLAGS: -L /interop/mit/src/lib -Wl,-rpath=krb5/ -lkrb5
 // #include <krb5.h>
 import "C"
 
