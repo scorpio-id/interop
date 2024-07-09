@@ -322,8 +322,9 @@ func main() {
 		fmt.Println("Principal ParseName Failed\n")
 	}
 
-	// now actually create principal
-	handle := C.get_handle("scorpio/admin")
+	var handle
+
+	handle := C.kadm5_init(kctx, "scorpio/admin", "resetme", "kadmin/admin", nil, C.KADM5_STRUCT_VERSION, C.api, nil, &handle)
 
 	C.kadm5_create_principal(handle, &p1, C.KADM5_PRINCIPAL, "resetme")
 }
