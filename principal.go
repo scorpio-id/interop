@@ -321,5 +321,7 @@ func main() {
 		fmt.Println("Principal ParseName Failed\n")
 	}
 
-	C.create_simple_princ(p1, "minlife-pol")
+	handle := C.get_handle("scorpio/admin")
+
+	C.kadm5_create_principal(handle, &p1, C.KADM5_PRINCIPAL, "resetme")
 }
