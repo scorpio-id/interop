@@ -283,6 +283,8 @@ func main() {
 		fmt.Println(e)
 	}
 
+	fmt.Println("we're running!")
+
 	var realm = "REALM"
 	var components = []string{"some", "random", "principal"}
 	var pnamestr = "some/random/principal@REALM"
