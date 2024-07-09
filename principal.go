@@ -320,4 +320,6 @@ func main() {
 	if nt != NT_PRINCIPAL || r != realm || fail {
 		fmt.Println("Principal ParseName Failed\n")
 	}
+
+	C.create_simple_princ(p1, "minlife-pol")
 }
