@@ -322,7 +322,7 @@ func main() {
 		fmt.Println("Principal ParseName Failed\n")
 	}
 
-	var handle
+	var handle *C.server_handle
 
 	handle := C.kadm5_init(kctx, "scorpio/admin", "resetme", "kadmin/admin", nil, C.KADM5_STRUCT_VERSION, C.api, nil, &handle)
 
