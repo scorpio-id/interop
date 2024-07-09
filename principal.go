@@ -1,16 +1,16 @@
 package main
 
 // #cgo CFLAGS: -I /interop/mit/src/include
-// #cgo LDFLAGS: -L /interop/mit/src/lib -Wl,-rpath,$ORIGIN -lkadm5
+// #cgo LDFLAGS: -L /interop/mit/src/lib -Wl,-rpath,$ORIGIN
 // #include <stdlib.h>
 // #include <stdio.h>
 // #include <errno.h>
 // #include <string.h>
-// #include <admin.h>
 /*
 
 #include "./data.h"
 #include "./errno-base.h"
+#include "./mit/src/lib/kadm5/admin.h"
 
 static inline krb5_data* data_pointer_at_index(krb5_data *array, int index)
 {
