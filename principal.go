@@ -1,7 +1,7 @@
 package main
 
 // #cgo CFLAGS: -I /interop/mit/src/include
-// #cgo LDFLAGS: -L /interop/mit/src/lib -Wl,-rpath,$ORIGIN -lkrb5
+// #cgo LDFLAGS: -L /interop/mit/src/lib -Wl,-rpath,$ORIGIN -lkadm5
 // #include <stdlib.h>
 // #include <stdio.h>
 // #include <errno.h>
@@ -321,6 +321,7 @@ func main() {
 		fmt.Println("Principal ParseName Failed\n")
 	}
 
+	// now actually create principal
 	handle := C.get_handle("scorpio/admin")
 
 	C.kadm5_create_principal(handle, &p1, C.KADM5_PRINCIPAL, "resetme")
