@@ -285,9 +285,9 @@ func main() {
 
 	fmt.Println("we're running!")
 
-	var realm = "REALM"
+	var realm = "SCORPIO.IO"
 	var components = []string{"some", "random", "principal"}
-	var pnamestr = "some/random/principal@REALM"
+	var pnamestr = "some/random/principal@SCORPIO.IO"
 
 	p1, err := kctx.BuildPrincipal(NT_PRINCIPAL, realm, components...)
 	if err != nil {
