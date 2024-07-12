@@ -53,6 +53,14 @@ krb5_build_principal_allocated_data(krb5_context context,
     return 0;
 }
 
+static uint32_t api;
+static krb5_boolean rpc;
+
+static krb5_context context;
+
+#define ADMIN_PASSWORD "resetme"
+#define USER_PASSWORD "resetme"
+
 static void *
 get_handle(char *client)
 {
