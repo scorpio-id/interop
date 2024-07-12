@@ -1,0 +1,1 @@
+python-kadmin @ git+https://github.com/twAlexM/python-kadmin

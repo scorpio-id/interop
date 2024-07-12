@@ -1,2 +1,2 @@
 # interop
-C capabilities with Go
+C capabilities with Python
