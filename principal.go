@@ -264,9 +264,13 @@ func main() {
 		fmt.Println("Principal ParseName Failed\n")
 	}
 
-	// var handle *C.server_handle
+	account := C.string("scorpio/admin")
+	handle := C.get_handle(account)
 
 	// handle := C.kadm5_init(kctx, "scorpio/admin", "resetme", "kadmin/admin", nil, C.KADM5_STRUCT_VERSION, C.api, nil, &handle)
 
-	// C.kadm5_create_principal(handle, &p1, C.KADM5_PRINCIPAL, "resetme")
+	err := C.kadm5_create_principal(handle, &p1, C.KADM5_PRINCIPAL, "resetme")
+	if err != nil {
+		fmt.Println(err)
+	}
 }
