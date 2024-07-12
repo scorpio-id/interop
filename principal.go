@@ -55,11 +55,17 @@ krb5_build_principal_allocated_data(krb5_context context,
 
 static uint32_t api;
 static krb5_boolean rpc;
-
 static krb5_context context;
 
 #define ADMIN_PASSWORD "resetme"
 #define USER_PASSWORD "resetme"
+
+
+static void
+check(krb5_error_code code)
+{
+    assert(code == 0);
+}
 
 static void *
 get_handle(char *client)
@@ -81,12 +87,6 @@ get_handle(char *client)
     check(kadm5_init(context, client, pass, service, NULL,
                      KADM5_STRUCT_VERSION, api, NULL, &handle));
     return handle;
-}
-
-static void
-check(krb5_error_code code)
-{
-    assert(code == 0);
 }
 
 */
