@@ -269,5 +269,5 @@ func main() {
 
 	// handle := C.kadm5_init(kctx, "scorpio/admin", "resetme", "kadmin/admin", nil, C.KADM5_STRUCT_VERSION, C.api, nil, &handle)
 
-	result := C.kadm5_create_principal(handle, &p1, C.KADM5_PRINCIPAL, C.CString("resetme"))
+	result := C.kadm5_create_principal(handle, p1, C.KADM5_PRINCIPAL, C.CString("resetme"))
 }
