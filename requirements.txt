@@ -1,1 +1,1 @@
-kadmin @ git+https://github.com/drewsilcock/python-kadmin
+kadmin @ git+https://github.com/liuyichen/python-kadmin
