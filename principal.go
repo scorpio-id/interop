@@ -264,7 +264,7 @@ func main() {
 		fmt.Println("Principal ParseName Failed\n")
 	}
 
-	account := C.string("scorpio/admin")
+	account := C.char("scorpio/admin")
 	handle := C.get_handle(account)
 
 	// handle := C.kadm5_init(kctx, "scorpio/admin", "resetme", "kadmin/admin", nil, C.KADM5_STRUCT_VERSION, C.api, nil, &handle)
