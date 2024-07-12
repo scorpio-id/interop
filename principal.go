@@ -83,6 +83,12 @@ get_handle(char *client)
     return handle;
 }
 
+static void
+check(krb5_error_code code)
+{
+    assert(code == 0);
+}
+
 */
 import "C"
 
