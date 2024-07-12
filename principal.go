@@ -22,7 +22,7 @@ static inline krb5_data* data_pointer_at_index(krb5_data *array, int index)
 // BE CAREFUL!
 // This function assumes realm and components are allocated on the heap
 // and takes ownership of the data *IFF* the return value is 0:
-// When no error, *Don't* free realm/components your self
+// When no error, *Don't* free realm/components yourself
 // Call krb5_free_principal on the resulting principal instead.
 // This is to avoid multiple copies Govalue->Cvalue->KerberosValue
 krb5_error_code
@@ -99,7 +99,6 @@ import (
 	"unsafe"
 )
 
-// principal.go begins here ...
 type Principal struct {
 	c *Context
 	p C.krb5_principal // pointer type
@@ -267,7 +266,5 @@ func main() {
 	account := C.CString("scorpio/admin")
 	handle := C.get_handle(account)
 
-	// handle := C.kadm5_init(kctx, "scorpio/admin", "resetme", "kadmin/admin", nil, C.KADM5_STRUCT_VERSION, C.api, nil, &handle)
-
-	result := C.kadm5_create_principal(handle, p1, C.KADM5_PRINCIPAL, C.CString("resetme"))
+	C.kadm5_create_principal(handle, p1.p, C.KADM5_PRINCIPAL, C.CString("resetme"))
 }
